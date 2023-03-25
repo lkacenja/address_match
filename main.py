@@ -88,12 +88,13 @@ def merge_address_files(voter_address_df: pd.DataFrame, polling_place_df: pd.Dat
     polling_without_precinct_df['Precinct'] = 'malformed-malformed'
     # Split up state and zip where possible.
     polling_with_precinct_df[['state_abbreviation', 'zip']] = polling_with_precinct_df['State/ZIP'].str.split(' ', n=1, expand=True)
+    polling_with_precinct_df['zip'] = polling_with_precinct_df['zip'].astype(str)
     # Put them back together again.
     polling_place_df = pd.concat([polling_with_precinct_df, polling_without_precinct_df])
     # Current polling place "Precinct" column is formatted [state code]-[precinct id].
     # Split that column into two columns.
     polling_place_df[['state_code', 'precinct_id']] = polling_place_df['Precinct'].str.split('-', n=1, expand=True)
-    print(polling_place_df)
+    polling_place_df['precinct_id'] = polling_place_df['precinct_id'].astype(str)
     # Prep for joining.
     # For consistency lowercase state.
     polling_place_df['state_abbreviation'] = polling_place_df['state_abbreviation'].str.lower()
@@ -102,6 +103,7 @@ def merge_address_files(voter_address_df: pd.DataFrame, polling_place_df: pd.Dat
     # Current polling place "Precinct ID" column is formatted [state id numeric]-[precinct id].
     # Split that column into two columns.
     voter_address_df[['state_id', 'precinct_id']] = voter_address_df['Precinct ID'].str.split('-', n=1, expand=True)
+    voter_address_df['precinct_id'] = voter_address_df['precinct_id'].astype(str)
     # Prep for joining.
     # For consistency lowercase state.
     voter_address_df['State'] = voter_address_df['State'].str.lower()
