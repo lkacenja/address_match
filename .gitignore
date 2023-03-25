@@ -161,5 +161,4 @@ cython_debug/
 
 # Data Directory
 #   Data should not be in VCS.
-data/input
-data/output
+data/
