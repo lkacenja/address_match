@@ -132,6 +132,8 @@ def merge_address_files(voter_address_df: pd.DataFrame, polling_place_df: pd.Dat
     # Flag all rows that had no match.
     # @todo In the future we may be able to automate cleaning these rows.
     voter_address_df['requires_investigation'] = np.where(voter_address_df['_merge'] == 'left_only', True, False)
+    # Normalize voter state.
+    voter_address_df['voter_State'] = voter_address_df['voter_State'].str.upper()
     # Create a renaming map for our output.
     output_columns = {
         'voter_Street': 'voter_street',
