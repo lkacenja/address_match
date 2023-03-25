@@ -2,6 +2,9 @@
 A script for matching voter address information with polling place address information.
 The script currently does some normalization on both input datasets. Then uses a list of full state name and abbreviations to join our datasets.
 
+## Strategy
+The repository suggests using a containerized solution where the code, input data and output data are included via Docker volumes. Input data and output data are intentionally excluded from the repository to protect personally identifiable information and to reduce cloning speed issues. The script currently outputs data to the shell, but could easily be modified to write a file or upload to a database.
+
 ## Usage
 To run the script, build the docker image and then execute it via `docker run`.
 1. `docker image build -t address-match .`
